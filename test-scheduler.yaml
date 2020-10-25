@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-scheduler
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: test-scheduler
+  template:
+    metadata:
+      labels:
+        app: test-scheduler
+      annotations:
+        rely.on.namespaces/name: "kube-system"
+        rely.on.pod/labs: "k8s-app=metrics-server"
+    spec:
+      schedulerName: sample-scheduler
+      containers:
+        - image: harbor.junengcloud.com/nginx/nginx:1.19.2-alpine
+          imagePullPolicy: IfNotPresent
+          name: nginx
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              cpu: 1000m
+              memory: 1024Mi
+            limits:
+              cpu: 2000m
+              memory: 2048Mi

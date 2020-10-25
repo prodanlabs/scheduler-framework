@@ -217,6 +217,11 @@ spec:
             - app
             - --config=/etc/kubernetes/scheduler-config.yaml
             - --v=3
+          env:
+            - name: CPU_THRESHOLD
+              value: "0.85"
+            - name: MEN_THRESHOLD
+              value: "0.85"
           resources:
             limits:
               cpu: 300m
